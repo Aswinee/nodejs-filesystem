@@ -31,10 +31,11 @@ async function loadApp() {
     // Purpose => Logging
     app.use((req, res, next) => {
       console.log(`${req.url} ${req.method} at ${new Date()}`);
+      fs.writeFileSync(destinationFile, data);
       res.send(data);
       next();
     });
-    fs.writeFileSync(destinationFile, data);
+ 
 
     //Starting server
     app.listen(3001, () => console.log(`Server listening at port 3001...`));
