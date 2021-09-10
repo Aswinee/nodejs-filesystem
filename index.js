@@ -2,6 +2,7 @@ const express = require("express");
 const fs = require("fs");
 const path = require("path");
 const app = express();
+const cors = require("cors");
 
 // current timestamp in milliseconds, date, month, year, hours, minutes
 let ts = Date.now();
@@ -28,7 +29,14 @@ const destinationFile = path.join("./output", "/current-date-time.txt");
 
 async function loadApp() {
   try {
-    // Purpose => Logging
+    
+    // Enable CORS for all origin
+    app.use(cors());
+
+    // Purpose => Parse Request Body
+    app.use(express.json());
+    
+    // Purpose => Logging, writing file
     app.use((req, res, next) => {
       console.log(`${req.url} ${req.method} at ${new Date()}`);
       fs.writeFileSync(destinationFile, data);
@@ -36,10 +44,10 @@ async function loadApp() {
       next();
     });
  
-
     //Starting server
     app.listen(3001, () => console.log(`Server listening at port 3001...`));
-  } catch (err) {
+  }
+  catch (err) {
     console.error(err);
     process.exit();
   }
