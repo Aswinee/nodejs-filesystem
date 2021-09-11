@@ -45,7 +45,7 @@ async function loadApp() {
     });
  
     //Starting server
-    app.listen(3001, () => console.log(`Server listening at port 3001...`));
+    app.listen(process.env.PORT || 3001, () => console.log(`Server listening at port 3001...`));
   }
   catch (err) {
     console.error(err);
